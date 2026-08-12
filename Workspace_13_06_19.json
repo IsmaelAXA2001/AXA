@@ -1,0 +1,247 @@
+{
+  "AXA_ADM_NB" : {
+    "Type" : "SimpleFolder",
+    "ControlmServer" : "CTMServerPROD",
+    "OrderMethod" : "Manual",
+    "DIARIA" : {
+      "Type" : "Job:Azure Data Factory",
+      "ConnectionProfile" : "DATAFACTORY_DTLK",
+      "Resource Group Name" : "z-aes-ew1-uc-prd-rgp0101",
+      "Parameters" : "{\"fecha_carga\": \"0000-00-00\"}",
+      "Data Factory Name" : "z-aes-ew1-uc-prd-rgp0101",
+      "CreatedBy" : "Nora",
+      "RunAs" : "DATAFACTORY_DTLK",
+      "Variables" : [ {
+        "UCM-BC_COUNTER" : "1"
+      } ],
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "MonthDays" : [ "NONE" ],
+        "MonthDaysCalendar" : "WEEKDAYS",
+        "DaysRelation" : "OR"
+      },
+      "eventsToWaitFor" : {
+        "Type" : "WaitForEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.UltimoDiaMes_laborable-AXA_ADM_NB.DIARIA"
+        } ]
+      },
+      "eventsToAdd" : {
+        "Type" : "AddEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.DIARIA-AXA_ADM_NB.Diaria_SinFestivos"
+        } ]
+      },
+      "eventsToDelete" : {
+        "Type" : "DeleteEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.UltimoDiaMes_laborable-AXA_ADM_NB.DIARIA"
+        } ]
+      }
+    },
+    "Diaria_SinFestivos" : {
+      "Type" : "Job:Azure Data Factory",
+      "ConnectionProfile" : "DATAFACTORY_DTLK",
+      "Resource Group Name" : "z-aes-ew1-uc-prd-rgp0101",
+      "Parameters" : "{\"fecha_carga\": \"0000-00-00\"}",
+      "CreatedBy" : "Nora",
+      "RunAs" : "DATAFACTORY_DTLK",
+      "Variables" : [ {
+        "UCM-BC_COUNTER" : "1"
+      } ],
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "MonthDays" : [ "NONE" ],
+        "MonthDaysCalendar" : "LABORABL",
+        "DaysRelation" : "OR"
+      },
+      "eventsToWaitFor" : {
+        "Type" : "WaitForEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.DIARIA-AXA_ADM_NB.Diaria_SinFestivos"
+        } ]
+      },
+      "eventsToAdd" : {
+        "Type" : "AddEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.Diaria_SinFestivos-AXA_ADM_NB.Dias_Especificos"
+        } ]
+      },
+      "eventsToDelete" : {
+        "Type" : "DeleteEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.DIARIA-AXA_ADM_NB.Diaria_SinFestivos"
+        } ]
+      }
+    },
+    "Dias_Especificos" : {
+      "Type" : "Job:Azure Data Factory",
+      "ConnectionProfile" : "DATAFACTORY_DTLK",
+      "Resource Group Name" : "z-aes-ew1-uc-prd-dfa0101",
+      "Parameters" : "{\"fecha_carga\": \"0000-00-00\"}",
+      "CreatedBy" : "Nora",
+      "Description" : "Si quieren cambiar de dias, ellos nos tienen que indicar que job.",
+      "RunAs" : "DATAFACTORY_DTLK",
+      "Variables" : [ {
+        "UCM-BC_COUNTER" : "1"
+      } ],
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "Months" : [ "NONE" ],
+        "SpecificDates" : [ "03/01", "11/21" ],
+        "MonthDays" : [ "NONE" ],
+        "StartDate" : "20260713",
+        "EndDate" : "20301122",
+        "DaysRelation" : "OR"
+      },
+      "eventsToWaitFor" : {
+        "Type" : "WaitForEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.Diaria_SinFestivos-AXA_ADM_NB.Dias_Especificos"
+        } ]
+      },
+      "eventsToAdd" : {
+        "Type" : "AddEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.Dias_Especificos-AXA_ADM_NB.Periodos_Especificos"
+        } ]
+      },
+      "eventsToDelete" : {
+        "Type" : "DeleteEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.Diaria_SinFestivos-AXA_ADM_NB.Dias_Especificos"
+        } ]
+      }
+    },
+    "Periodos_Especificos" : {
+      "Type" : "Job:Azure Data Factory",
+      "ConnectionProfile" : "DATAFACTORY_DTLK",
+      "Resource Group Name" : "z-aes-ew1-uc-prd-dfa0101",
+      "Parameters" : "{\"fecha_carga\": \"0000-00-00\"}",
+      "CreatedBy" : "Nora",
+      "Description" : "Si quieren cambiar de dias, ellos nos tienen que indicar que job.",
+      "RunAs" : "DATAFACTORY_DTLK",
+      "Variables" : [ {
+        "UCM-BC_COUNTER" : "1"
+      } ],
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "Months" : [ "NONE" ],
+        "SpecificDates" : [ "03/01", "11/09", "03/02", "03/03", "11/11", "11/10", "03/04", "03/05" ],
+        "MonthDays" : [ "NONE" ],
+        "StartDate" : "20260713",
+        "EndDate" : "20301122",
+        "DaysRelation" : "OR"
+      },
+      "eventsToWaitFor" : {
+        "Type" : "WaitForEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.Dias_Especificos-AXA_ADM_NB.Periodos_Especificos"
+        } ]
+      },
+      "eventsToDelete" : {
+        "Type" : "DeleteEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.Dias_Especificos-AXA_ADM_NB.Periodos_Especificos"
+        } ]
+      }
+    },
+    "PrimerDiaMes_laborable" : {
+      "Type" : "Job:Azure Data Factory",
+      "ConnectionProfile" : "DATAFACTORY_DTLK",
+      "Resource Group Name" : "z-aes-ew1-uc-prd-rgp0101",
+      "Data Factory Name" : "z-aes-ew1-uc-prd-rgp0101",
+      "Parameters" : "{\"fecha_carga\": \"0000-00-00\"}",
+      "CreatedBy" : "Nora",
+      "RunAs" : "DATAFACTORY_DTLK",
+      "Variables" : [ {
+        "UCM-BC_COUNTER" : "1"
+      } ],
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "MonthDays" : [ "D1" ],
+        "MonthDaysCalendar" : "LABORABL",
+        "DaysRelation" : "OR"
+      },
+      "eventsToWaitFor" : {
+        "Type" : "WaitForEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.UltDiaMes_excepDomingos-AXA_ADM_NB.PrimerDiaMes_laborable"
+        } ]
+      },
+      "eventsToAdd" : {
+        "Type" : "AddEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.PrimerDiaMes_laborable-AXA_ADM_NB.UltimoDiaMes_laborable"
+        } ]
+      },
+      "eventsToDelete" : {
+        "Type" : "DeleteEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.UltDiaMes_excepDomingos-AXA_ADM_NB.PrimerDiaMes_laborable"
+        } ]
+      }
+    },
+    "UltDiaMes_excepDomingos" : {
+      "Type" : "Job:Azure Data Factory",
+      "ConnectionProfile" : "DATAFACTORY_DTLK",
+      "Resource Group Name" : "z-aes-ew1-uc-prd-rgp0101",
+      "Parameters" : "{\"fecha_carga\": \"0000-00-00\"}",
+      "Data Factory Name" : "z-aes-ew1-uc-prd-dfa0101",
+      "Pipeline Name" : "agente_panle",
+      "CreatedBy" : "Nora",
+      "RunAs" : "DATAFACTORY_DTLK",
+      "Variables" : [ {
+        "UCM-BC_COUNTER" : "1"
+      } ],
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "MonthDays" : [ "NONE" ],
+        "MonthDaysCalendar" : "CALCIERR",
+        "DaysRelation" : "OR"
+      },
+      "eventsToAdd" : {
+        "Type" : "AddEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.UltDiaMes_excepDomingos-AXA_ADM_NB.PrimerDiaMes_laborable"
+        } ]
+      }
+    },
+    "UltimoDiaMes_laborable" : {
+      "Type" : "Job:Azure Data Factory",
+      "ConnectionProfile" : "DATAFACTORY_DTLK",
+      "Resource Group Name" : "z-aes-ew1-uc-prd-rgp0101",
+      "Parameters" : "{\"fecha_carga\": \"0000-00-00\"}",
+      "Data Factory Name" : "z-aes-ew1-uc-prd-dfa0101",
+      "CreatedBy" : "Nora",
+      "RunAs" : "DATAFACTORY_DTLK",
+      "Variables" : [ {
+        "UCM-BC_COUNTER" : "1"
+      } ],
+      "When" : {
+        "WeekDays" : [ "NONE" ],
+        "MonthDays" : [ "L1" ],
+        "MonthDaysCalendar" : "LABORABL",
+        "DaysRelation" : "OR"
+      },
+      "eventsToWaitFor" : {
+        "Type" : "WaitForEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.PrimerDiaMes_laborable-AXA_ADM_NB.UltimoDiaMes_laborable"
+        } ]
+      },
+      "eventsToAdd" : {
+        "Type" : "AddEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.UltimoDiaMes_laborable-AXA_ADM_NB.DIARIA"
+        } ]
+      },
+      "eventsToDelete" : {
+        "Type" : "DeleteEvents",
+        "Events" : [ {
+          "Event" : "AXA_ADM_NB.PrimerDiaMes_laborable-AXA_ADM_NB.UltimoDiaMes_laborable"
+        } ]
+      }
+    }
+  }
+}
