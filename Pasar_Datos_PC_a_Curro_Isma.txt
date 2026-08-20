@@ -1,0 +1,1 @@
+Buenas, quiero crear otra app que sea de calendarios de control-M, te explico en control-M tenemos ya una serie de calendarios creados, pero hay veces que nos dicen, creame X job que se ejecute todos los lunes el mes, ese calendario ya existe entonces quiero que me lo muestres en formato de control-m como en la captura que te voy a pasar
