@@ -1,1 +1,11 @@
-Buenas, quiero crear otra app que sea de calendarios de control-M, te explico en control-M tenemos ya una serie de calendarios creados, pero hay veces que nos dicen, creame X job que se ejecute todos los lunes el mes, ese calendario ya existe entonces quiero que me lo muestres en formato de control-m como en la captura que te voy a pasar
+Buenas, te he pasado dos .zip, que son las ejecucacione del dia de ayer de control-M tanto de Mainframe como de Distribuidos, necesitamos que de cada uno de esos .zip saques los calendarios que dan error.
+
+Y tambien necesitaria en una lista los jobs que contengan algun calendario en excluded ruled-based
+
+Revisalo con calma, ya que es algo critico, tomate tu tiempo y pasame la info coorrecta
+
+Te paso tambien por is lo necesitas la extraccion de los calendarios 
+
+
+
+puedes sacar de nuevo los calendarios que den error y los job que contengan algun calendario en excluded ruled-based ??
