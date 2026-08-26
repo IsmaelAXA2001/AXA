@@ -1,11 +1,108 @@
-Buenas, te he pasado dos .zip, que son las ejecucacione del dia de ayer de control-M tanto de Mainframe como de Distribuidos, necesitamos que de cada uno de esos .zip saques los calendarios que dan error.
+Claro. El Excel está dividido así:
 
-Y tambien necesitaria en una lista los jobs que contengan algun calendario en excluded ruled-based
+1. Resumen
+Métrica: dato que se está contando.
+Mainframe: cantidad encontrada en el XML de Mainframe.
+Distribuidos: cantidad encontrada en Distribuidos.
+Total: suma de ambos entornos.
+Lectura: explicación del significado del dato.
 
-Revisalo con calma, ya que es algo critico, tomate tu tiempo y pasame la info coorrecta
+Incluye también las conclusiones, los archivos analizados y la reserva sobre la ausencia de logs de ejecución.
 
-Te paso tambien por is lo necesitas la extraccion de los calendarios 
+2. Errores_MF y Errores_DI
 
+Ambas hojas tienen los mismos campos, separadas por entorno:
 
+Entorno: Mainframe o Distribuidos.
+Archivo: XML analizado.
+Tipo de hallazgo: tipo de problema detectado.
+Job: job que utiliza el calendario.
+Folder: carpeta donde está el job.
+Tipo contenedor: FOLDER, SMART_FOLDER o SUB_FOLDER.
+Calendario referenciado: nombre del calendario que usa el job.
+Motivo: por qué se considera una inconsistencia.
+Reserva: advertencia sobre la interpretación del resultado.
+Evidencia XML: relación encontrada entre el job y el calendario.
+3. Calendarios_Error
 
-puedes sacar de nuevo los calendarios que den error y los job que contengan algun calendario en excluded ruled-based ??
+Vista agrupada por calendario:
+
+Entorno: origen del calendario.
+Archivo: XML donde se buscó.
+Calendario: nombre del calendario no encontrado.
+Jobs afectados: número de jobs que lo referencian.
+Jobs: listado de jobs afectados.
+Folders: carpetas donde aparecen.
+Motivo: explicación de la incidencia.
+Reserva: indica que no confirma por sí solo un error de ejecución.
+4. Jobs_Excluded
+
+Lista de jobs que tienen o heredan un calendario excluded:
+
+Entorno: Mainframe o Distribuidos.
+Archivo: XML de origen.
+Job: nombre del job.
+Folder contenedor: carpeta que contiene el job.
+Tipo contenedor: tipo de carpeta.
+Parent Folder: carpeta padre indicada en el XML.
+Application: aplicación de Control‑M.
+Sub‑Application: subaplicación.
+Datacenter: servidor o entorno de Control‑M.
+Plataforma: plataforma indicada, si existe.
+Relación: relación de calendarios, normalmente A (AND) u O (OR).
+Calendarios excluded: calendarios cuyo nombre comienza por !.
+Refs directas: calendarios escritos directamente en el job.
+Wildcard heredado: indica si el job usa NAME="*" y hereda los calendarios del contenedor.
+Criterio de inclusión: regla utilizada para incluir el job.
+Reserva: advertencia sobre la interpretación de la herencia.
+5. Calendarios_Excluded
+
+Detalle de cada definición excluded:
+
+Entorno: origen.
+Archivo: XML analizado.
+Folder: carpeta que contiene el calendario.
+Tipo contenedor: tipo de carpeta.
+Calendario XML: nombre original, por ejemplo !DSUPRESP.
+Calendario normalizado: nombre sin la exclamación inicial.
+LEVEL: valor original del atributo XML.
+DAYS: días configurados, por ejemplo L2.
+DAYSCAL: calendario laboral utilizado.
+DAYS_AND_OR: indica si las reglas de días se combinan con AND u OR.
+Meses activos: meses en los que está habilitado.
+SHIFT: tratamiento de días no laborables.
+Jobs afectados: jobs que lo heredan o utilizan.
+Criterio: motivo por el que se considera excluded.
+Reserva: comprobación recomendada en Control‑M.
+6. Referencias_NoEncontradas
+
+Detalle completo de cada referencia inexistente en el XML:
+
+Entorno
+Archivo
+Job
+Folder
+Tipo contenedor
+Application
+Sub‑Application
+Datacenter
+Plataforma
+Calendario referenciado
+Resultado: explica que no se encontró la definición.
+Reserva: aclara que podría existir en otro catálogo o entorno.
+7. Control_Tecnico
+
+Sirve para comprobar qué contiene realmente cada XML:
+
+Entorno: Mainframe o Distribuidos.
+Archivo: XML revisado.
+Elemento XML: tipo de elemento, como JOB o RULE_BASED_CALENDAR.
+Ocurrencias: número de veces que aparece.
+Atributos observados: atributos encontrados en ese elemento.
+Lectura: interpretación técnica y limitaciones.
+
+La regla principal utilizada es:
+
+Calendario excluded: NAME comienza por !.
+Job afectado: referencia directa al calendario o uso de NAME="*" dentro de una carpeta que contiene calendarios excluded.
+Referencia no encontrada: el nombre del calendario no aparece en ninguna definición del XML analizado.
